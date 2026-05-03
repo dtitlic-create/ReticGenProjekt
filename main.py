@@ -4,10 +4,6 @@ from genetika_zmija import izracun_gena
 from pony import orm
 from leglo import Leglo
 app = Flask(__name__)
-@app.route('/', methods=['GET'])
-def index():
-    svi_moguci = sorted(KODOMINANTNI_GENI)
-    return jsonify(svi_moguci)
 @app.route('/izracunaj', methods=['POST'])
 @orm.db_session
 def izracunaj():
