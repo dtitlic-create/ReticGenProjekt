@@ -4,6 +4,7 @@ from genetika_zmija import izracun_gena
 from pony import orm
 from leglo import Leglo
 app = Flask(__name__)
+# POST metoda
 @app.route('/izracunaj', methods=['POST'])
 @orm.db_session
 def izracunaj():
@@ -25,21 +26,54 @@ def izracunaj():
         "id_legla": novo_leglo.id,
         "share_link": f"http://127.0.0.1:5000/izracunaj/{novo_leglo.id}",
         "rezultat_parenja": rezultat
-    })
-
+    }), 201
+# GET metoda
 @app.route('/izracunaj/<int:leglo_id>', methods = ['GET'])
 @orm.db_session
 def pretraga(leglo_id):
     zapis = Leglo.get(id=leglo_id)
 
     if not zapis:
-        return "Izracun pod tim brojem nepostoji u arhivi"
+        return jsonify({"message" : f"Izracun pod brojem {leglo_id} nepostoji u arhivi"}), 404
     return jsonify({
         "id_legla" : zapis.id,
         "otac" : zapis.roditelj1,
         "majka" : zapis.roditelj2,
         "leglo" : zapis.rezultat
     })
+# PUT metoda
+@app.route('/azuriraj/<int:leglo_id>', methods = ['PUT'])
+@orm.db_session # razgovor s bazom, nuzan da bi radilo
+def azuriraj(leglo_id):
+    zapis = Leglo.get(id=leglo_id)
+    if not zapis:
+        return jsonify({"message": f"Leglo s id-em {leglo_id} nije pronadjeno"}), 404 #http errori
+    podaci = request.get_json() #preuzima trenutan upis u postmanu
+    novi_otac = podaci.get('zmija1', zapis.roditelj1) # uzima novi ako ga ima inace uzima stari
+    nova_majka = podaci.get('zmija2', zapis.roditelj2)
+    novi_rezultat = izracun_gena(novi_otac, nova_majka)
+
+    # spremanje u bazu
+    zapis.roditelj1 = novi_otac
+    zapis.roditelj2 = nova_majka
+    zapis.rezultat = novi_rezultat
+
+    return jsonify ({
+        "id_legla": zapis.id,
+        "novi_otac" : zapis.roditelj1,
+        "nova_majka" : zapis.roditelj2,
+        "rezultat_parenja": zapis.rezultat
+    }), 201
+
+# DELETE metoda
+@app.route('/izbrisi/<int:leglo_id>', methods = ['DELETE'])
+@orm.db_session
+def izbrisi(leglo_id):
+    zapis = Leglo.get(id=leglo_id)
+    if not zapis:
+        return jsonify({"message" : f"Zapis legla sa id-om {leglo_id} nepostoji! "}), 404
+    zapis.delete()
+    return jsonify ({"message": f"Leglo s id-om {leglo_id} je obrisano!"})
 
 if __name__ == '__main__':
     app.run(debug=True)
