@@ -41,6 +41,20 @@ def pretraga(leglo_id):
         "majka" : zapis.roditelj2,
         "leglo" : zapis.rezultat
     })
+# GET metoda arhiva
+@app.route('/arhiva', methods = ['GET'])
+@orm.db_session
+def arhiva():
+    svi_zapisi = Leglo.select().order_by(orm.desc(Leglo.id)) # ispis od najnovijeg
+    ispis = []
+    for z in svi_zapisi:
+        ispis.append({
+            "id" : z.id,
+            "otac" : z.roditelj1,
+            "majka" : z.roditelj2,
+            "leglo" : z.rezultat
+        })
+    return jsonify(ispis), 200
 # PUT metoda
 @app.route('/azuriraj/<int:leglo_id>', methods = ['PUT'])
 @orm.db_session # razgovor s bazom, nuzan da bi radilo
