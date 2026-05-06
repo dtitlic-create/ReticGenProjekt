@@ -1,34 +1,45 @@
-from flask import Flask, make_response, request, jsonify
+from flask import Flask, make_response, request, jsonify, render_template
 from genska_lista import KODOMINANTNI_GENI, SUPER_GENI
 from genetika_zmija import izracun_gena
 from pony import orm
 from leglo import Leglo
 app = Flask(__name__)
 # POST metoda
-@app.route('/izracunaj', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 @orm.db_session
 def izracunaj():
-    podaci = request.get_json()
-    geni_oca = podaci.get('zmija1')
-    geni_majke = podaci.get('zmija2')
+    # 1. GET
+    if request.method == 'GET':
+        # Problem jer je jedna grupa list druga dict
+        lista1 = KODOMINANTNI_GENI if isinstance(KODOMINANTNI_GENI, list) else list(KODOMINANTNI_GENI.keys())
+        lista2 = SUPER_GENI if isinstance(SUPER_GENI, list) else list(SUPER_GENI.keys())
 
-    rezultat = izracun_gena(geni_oca, geni_majke)
+        svi_geni = list(dict.fromkeys(lista1 + lista2))
+        return render_template('index.html', geni=svi_geni)
+    # 2. POST
+    if request.method == 'POST':
+        podaci = request.json
+        geni_oca = podaci.get('zmija1')
+        geni_majke = podaci.get('zmija2')
 
-    # spremanje u bazu
-    novo_leglo = Leglo(
-        roditelj1=geni_oca,
-        roditelj2=geni_majke,
-        rezultat=rezultat
-    )
-    # Izracun + share
-    orm.commit() #forsiranje bez kojeg neradi share
-    return jsonify({
-        "id_legla": novo_leglo.id,
-        "share_link": f"http://127.0.0.1:5000/izracunaj/{novo_leglo.id}",
-        "rezultat_parenja": rezultat
-    }), 201
+        rezultat = izracun_gena(geni_oca, geni_majke)
+
+        # spremanje u bazu
+        novo_leglo = Leglo(
+            roditelj1=geni_oca,
+            roditelj2=geni_majke,
+            rezultat=rezultat
+        )
+        # Izracun + share
+        orm.commit()  # forsiranje bez kojeg ne radi share
+
+        return jsonify({
+            "id_legla": novo_leglo.id,
+            "share_link": f"http://127.0.0.1:5000/{novo_leglo.id}",
+            "rezultat_parenja": rezultat
+        }), 201
 # GET metoda
-@app.route('/izracunaj/<int:leglo_id>', methods = ['GET'])
+@app.route('/<int:leglo_id>', methods = ['GET'])
 @orm.db_session
 def pretraga(leglo_id):
     zapis = Leglo.get(id=leglo_id)
@@ -62,7 +73,7 @@ def azuriraj(leglo_id):
     zapis = Leglo.get(id=leglo_id)
     if not zapis:
         return jsonify({"message": f"Leglo s id-em {leglo_id} nije pronadjeno"}), 404 #http errori
-    podaci = request.get_json() #preuzima trenutan upis u postmanu
+    podaci = request.json #preuzima trenutan upis u postmanu
     novi_otac = podaci.get('zmija1', zapis.roditelj1) # uzima novi ako ga ima inace uzima stari
     nova_majka = podaci.get('zmija2', zapis.roditelj2)
     novi_rezultat = izracun_gena(novi_otac, nova_majka)

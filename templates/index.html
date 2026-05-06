@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reticulated Python Genetic Calculator</title>
+
+    <!-- choices.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+
+    <!-- povezivanje preko flaska -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Reticulated Python Genetic Calculator</h1>
+        <div class="actions">
+            <button id="shareBtn">🔗 Share</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+    </div>
+
+    <div class="calculator-inputs">
+        <div class="parent-box">
+            <label>Parent 1</label>
+            <select id="parent1" multiple>
+                {% for gen in geni %}
+                    <option value="{{ gen }}">{{ gen }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <span style="font-weight: bold; color: #888; margin-top: 15px;">X</span>
+        <div class="parent-box">
+            <label>Parent 2</label>
+            <select id="parent2" multiple>
+                {% for gen in geni %}
+                    <option value="{{ gen }}">{{ gen }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <button id="calcBtn">Izračunaj</button>
+
+    <table id="resultsTable">
+        <thead>
+            <tr>
+                <th>Prob</th>
+                <th>Morph Name</th>
+            </tr>
+        </thead>
+        <tbody id="resultsBody">
+            <!-- JS ubacuje redove -->
+        </tbody>
+    </table>
+
+    <!-- choices.js skripta -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <script>
+        const element1 = document.getElementById('parent1');
+        const element2 = document.getElementById('parent2');
+
+        const choices1 = new Choices(element1, { removeItemButton: true, placeholderValue: 'Odaberi gene...', searchPlaceholderValue: 'Pretraži...' });
+        const choices2 = new Choices(element2, { removeItemButton: true, placeholderValue: 'Odaberi gene...', searchPlaceholderValue: 'Pretraži...' });
+
+        let currentShareLink = "";
+
+        document.getElementById('calcBtn').addEventListener('click', function() {
+            const zmija1 = choices1.getValue(true);
+            const zmija2 = choices2.getValue(true);
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "zmija1": zmija1, "zmija2": zmija2 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultsTable').style.display = 'table';
+                document.getElementById('shareBtn').style.display = 'inline-block';
+                currentShareLink = data.share_link;
+
+                const tbody = document.getElementById('resultsBody');
+                tbody.innerHTML = "";
+
+                for (const [morf, postotak] of Object.entries(data.rezultat_parenja)) {
+                    const row = `<tr>
+                                    <td><strong>${postotak}%</strong></td>
+                                    <td>${morf}</td>
+                                 </tr>`;
+                    tbody.innerHTML += row;
+                }
+            })
+            .catch(error => console.error('Greška:', error));
+        });
+
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            if(currentShareLink) {
+                navigator.clipboard.writeText(currentShareLink).then(() => {
+                    alert("Link je kopiran u međuspremnik: " + currentShareLink);
+                });
+            }
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            choices1.removeActiveItems();
+            choices2.removeActiveItems();
+
+            document.getElementById('resultsTable').style.display = 'none';
+            document.getElementById('shareBtn').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
