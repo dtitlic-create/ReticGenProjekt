@@ -1,6 +1,6 @@
 
 KODOMINANTNI_GENI = [
-    "Tiger", "Sunfire", "Motley", "Platinum", "Golden Child",
+    "Normal", "Tiger", "Sunfire", "Motley", "Platinum", "Golden Child",
     "Phantom", "Anthrax", "Yellowback", "Orange Dream", "Enchi",
     "Lava", "Jaguar", "Tribal", "Woma", "Tessera", "Fader",
     "Spider", "Citrus", "Marble", "Opal", "Superstripe", "Headed",
