@@ -11,9 +11,9 @@ Ovaj projekt je backend sustav izgrađen pomoću **Python Flask** okvira za izra
 
 Aplikacija nije samo kalkulator, već i digitalna arhiva vaših legla:
 
-*   **Create (Stvori):** `/izracunaj` (POST) – Izračunava genetiku i automatski sprema zapis u bazu.
+*   **Create (Stvori):** `/` (POST) – Izračunava genetiku i automatski sprema zapis u bazu.
 *   **Read (Pročitaj):** 
-    *   `/izracunaj/<id>` (GET) – Dohvaća specifično leglo putem jedinstvenog ključa.
+    *   `/<id>` (GET) – Dohvaća specifično leglo putem jedinstvenog ključa.
     *   `/arhiva` (GET) – Izlistava sva spremljena legla iz baze podataka.
 *   **Update (Ažuriraj):** `/azuriraj/<id>` (PUT) – Omogućuje izmjenu roditelja ili rezultata postojećeg zapisa.
 *   **Delete (Obriši):** `/obrisi/<id>` (DELETE) – Trajno uklanja zapis iz povijesti.
