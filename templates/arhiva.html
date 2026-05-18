@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arhiva legala</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a class="navbar-brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
+        <a class="nav-link active" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
+    </nav>
+
+    <div class="container">
+        <h2>Arhiva legala</h2>
+
+        {% if legla %}
+            <ul class="list-group">
+                {% for z in legla %}
+                    <li class="list-item">
+                        <div>
+                            <strong>Leglo #{{ z.id }}</strong><br>
+                            <small>
+                                Roditelj 1: {{ z.otac | join(', ') }}<br>
+                                Roditelj 2: {{ z.majka | join(', ') }}
+                            </small>
+                            <ul>
+                                {% for morf, postotak in z.leglo.items() %}
+                                    <li>{{ postotak }}% — {{ morf }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <button class="btn btn-danger btn-sm" data-id="{{ z.id }}" onclick="obrisiLeglo(this.dataset.id)">Obriši</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Arhiva je prazna.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function obrisiLeglo(id) {
+            if (confirm('Jeste li sigurni da želite obrisati leglo #' + id + '?')) {
+                fetch('/izbrisi/' + id, { method: 'DELETE' })
+                    .then(response => response.json())
+                    .then(data => location.reload())
+                    .catch(error => console.error('Greška:', error));
+            }
+        }
+    </script>
+
+</body>
+</html>
