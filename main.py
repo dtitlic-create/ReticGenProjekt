@@ -52,7 +52,7 @@ def pretraga(leglo_id):
         "majka" : zapis.roditelj2,
         "leglo" : zapis.rezultat
     })
-# GET metoda arhiva
+# GET metoda arhiva (JSON - za Postman)
 @app.route('/arhiva', methods = ['GET'])
 @orm.db_session
 def arhiva():
@@ -66,6 +66,21 @@ def arhiva():
             "leglo" : z.rezultat
         })
     return jsonify(ispis), 200
+
+# GET metoda arhiva (HTML za pregled u pregledniku)
+@app.route('/pregled-arhiva', methods = ['GET'])
+@orm.db_session
+def pregled_arhiva():
+    svi_zapisi = Leglo.select().order_by(orm.desc(Leglo.id))
+    ispis = []
+    for z in svi_zapisi:
+        ispis.append({
+            "id" : z.id,
+            "otac" : z.roditelj1,
+            "majka" : z.roditelj2,
+            "leglo" : z.rezultat
+        })
+    return render_template('arhiva.html', legla=ispis)
 # PUT metoda
 @app.route('/azuriraj/<int:leglo_id>', methods = ['PUT'])
 @orm.db_session # razgovor s bazom, nuzan da bi radilo
@@ -101,4 +116,4 @@ def izbrisi(leglo_id):
     return jsonify ({"message": f"Leglo s id-om {leglo_id} je obrisano!"})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
