@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reticulated Python Genetic Calculator</title>
+    <title>ReticGen - Genetski Kalkulator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a class="navbar-brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
-        <a class="nav-link" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
-    </nav>
+    <div class="navigacija">
+        <a class="brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
+        <a class="link" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
+    </div>
 
-    <div class="container">
+    <div class="sadrzaj">
         <h2>Reticulated Python Genetic Calculator</h2>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="parent1" class="form-label">Roditelj 1:</label>
-                <select id="parent1" class="form-select" multiple size="10">
+        <div class="roditelji">
+            <div class="roditelj">
+                <label for="parent1">Roditelj 1:</label><br>
+                <select id="parent1" class="odabir" multiple size="10">
                     {% for gen in geni %}
                         <option value="{{ gen }}">{{ gen }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-group center">
+            <div class="krizic">
                 <h3>X</h3>
             </div>
-            <div class="form-group">
-                <label for="parent2" class="form-label">Roditelj 2:</label>
-                <select id="parent2" class="form-select" multiple size="10">
+            <div class="roditelj">
+                <label for="parent2">Roditelj 2:</label><br>
+                <select id="parent2" class="odabir" multiple size="10">
                     {% for gen in geni %}
                         <option value="{{ gen }}">{{ gen }}</option>
                     {% endfor %}
@@ -38,13 +36,13 @@
             </div>
         </div>
 
-        <div class="button-row">
-            <button id="calcBtn" class="btn btn-primary">Izračunaj</button>
-            <button id="clearBtn" class="btn btn-secondary">Očisti</button>
-            <button id="shareBtn" class="btn btn-success" style="display:none;">Share link</button>
+        <div class="gumbi">
+            <button id="calcBtn" class="btn plavi">Izračunaj</button>
+            <button id="clearBtn" class="btn sivi">Očisti</button>
+            <button id="shareBtn" class="btn zeleni" style="display:none;">Share link</button>
         </div>
 
-        <table id="resultsTable" class="table" style="display:none;">
+        <table id="resultsTable" class="tablica" style="display:none;">
             <thead>
                 <tr>
                     <th>Vjerojatnost</th>
@@ -56,7 +54,7 @@
     </div>
 
     <script>
-        let currentShareLink = "";
+        let trenutniLink = "";
 
         function odabraniGeni(selectId) {
             const select = document.getElementById(selectId);
@@ -82,7 +80,7 @@
             .then(data => {
                 document.getElementById('resultsTable').style.display = 'table';
                 document.getElementById('shareBtn').style.display = 'inline-block';
-                currentShareLink = data.share_link;
+                trenutniLink = data.share_link;
 
                 const tbody = document.getElementById('resultsBody');
                 tbody.innerHTML = "";
@@ -94,9 +92,9 @@
         });
 
         document.getElementById('shareBtn').addEventListener('click', function() {
-            if (currentShareLink) {
-                navigator.clipboard.writeText(currentShareLink).then(() => {
-                    alert("Link je kopiran: " + currentShareLink);
+            if (trenutniLink) {
+                navigator.clipboard.writeText(trenutniLink).then(() => {
+                    alert("Link je kopiran: " + trenutniLink);
                 });
             }
         });

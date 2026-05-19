@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arhiva legala</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <nav class="navbar">
-        <a class="navbar-brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
-        <a class="nav-link active" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
-    </nav>
+    <div class="navigacija">
+        <a class="brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
+        <a class="link aktivan" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
+    </div>
 
-    <div class="container">
+    <div class="sadrzaj">
         <h2>Arhiva legala</h2>
 
         {% if legla %}
-            <ul class="list-group">
+            <ul class="lista">
                 {% for z in legla %}
-                    <li class="list-item">
+                    <li class="stavka">
                         <div>
                             <strong>Leglo #{{ z.id }}</strong><br>
                             <small>
@@ -32,7 +30,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <button class="btn btn-danger btn-sm" data-id="{{ z.id }}" onclick="obrisiLeglo(this.dataset.id)">Obriši</button>
+                        <button class="btn crveni btn-mali" data-id="{{ z.id }}" onclick="obrisiLeglo(this.dataset.id)">Obriši</button>
                     </li>
                 {% endfor %}
             </ul>

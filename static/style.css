@@ -1,4 +1,3 @@
-/* === Osnovno === */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,8 +14,7 @@ h2, h3 {
     margin-bottom: 15px;
 }
 
-/* === Navbar === */
-.navbar {
+.navigacija {
     background-color: #e9ecef;
     padding: 15px 30px;
     display: flex;
@@ -25,30 +23,29 @@ h2, h3 {
     border-bottom: 1px solid #ccc;
 }
 
-.navbar-brand {
+.brand {
     font-weight: bold;
     font-size: 20px;
     color: #333;
     text-decoration: none;
 }
 
-.nav-link {
+.link {
     text-decoration: none;
     color: #555;
     padding: 5px 10px;
 }
 
-.nav-link:hover {
+.link:hover {
     color: #000;
 }
 
-.nav-link.active {
+.link.aktivan {
     color: #000;
     font-weight: bold;
 }
 
-/* === Kontejner === */
-.container {
+.sadrzaj {
     max-width: 900px;
     margin: 30px auto;
     padding: 20px;
@@ -57,30 +54,23 @@ h2, h3 {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* === Forma === */
-.form-row {
+.roditelji {
     display: flex;
     gap: 20px;
     align-items: flex-end;
     margin-top: 20px;
 }
 
-.form-group {
+.roditelj {
     flex: 1;
 }
 
-.form-group.center {
+.krizic {
     flex: 0;
     padding-bottom: 10px;
 }
 
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-select {
+.odabir {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -89,8 +79,7 @@ h2, h3 {
     font-size: 14px;
 }
 
-/* === Gumbi === */
-.button-row {
+.gumbi {
     margin-top: 20px;
 }
 
@@ -104,75 +93,73 @@ h2, h3 {
     margin-right: 5px;
 }
 
-.btn-primary {
+.plavi {
     background-color: #0d6efd;
     color: white;
 }
 
-.btn-primary:hover {
+.plavi:hover {
     background-color: #0b5ed7;
 }
 
-.btn-secondary {
+.sivi {
     background-color: #6c757d;
     color: white;
 }
 
-.btn-secondary:hover {
+.sivi:hover {
     background-color: #5c636a;
 }
 
-.btn-success {
+.zeleni {
     background-color: #198754;
     color: white;
 }
 
-.btn-success:hover {
+.zeleni:hover {
     background-color: #157347;
 }
 
-.btn-danger {
+.crveni {
     background-color: #dc3545;
     color: white;
 }
 
-.btn-danger:hover {
+.crveni:hover {
     background-color: #bb2d3b;
 }
 
-.btn-sm {
+.btn-mali {
     padding: 5px 10px;
     font-size: 13px;
 }
 
-/* === Tablica === */
-.table {
+.tablica {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.table th, .table td {
+.tablica th, .tablica td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.table th {
+.tablica th {
     background-color: #f1f1f1;
 }
 
-.table tr:nth-child(even) {
+.tablica tr:nth-child(even) {
     background-color: #fafafa;
 }
 
-/* === Lista (za arhivu) === */
-.list-group {
+.lista {
     list-style: none;
     margin-top: 15px;
 }
 
-.list-item {
+.stavka {
     background-color: white;
     border: 1px solid #ddd;
     padding: 15px;
@@ -183,11 +170,11 @@ h2, h3 {
     align-items: flex-start;
 }
 
-.list-item ul {
+.stavka ul {
     margin-top: 10px;
     margin-left: 20px;
 }
 
-.list-item small {
+.stavka small {
     color: #666;
 }
