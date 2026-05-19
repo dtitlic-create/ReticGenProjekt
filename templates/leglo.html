@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leglo #{{ leglo.id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="navigacija">
+        <a class="brand" href="{{ url_for('izracunaj') }}">ReticGen</a>
+        <a class="link" href="{{ url_for('pregled_arhiva') }}">Arhiva</a>
+    </div>
+
+    <div class="sadrzaj">
+        <h2>Leglo #{{ leglo.id }}</h2>
+        <p>Roditelj 1: <strong>{{ leglo.otac | join(', ') }}</strong></p>
+        <p>Roditelj 2: <strong>{{ leglo.majka | join(', ') }}</strong></p>
+
+        <table class="tablica">
+            <thead>
+                <tr>
+                    <th>Vjerojatnost</th>
+                    <th>Morph</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for morf, postotak in leglo.leglo.items() %}
+                    <tr>
+                        <td><strong>{{ postotak }}%</strong></td>
+                        <td>{{ morf }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
