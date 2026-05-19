@@ -59,6 +59,12 @@ Aplikacija će biti dostupna na `http://127.0.0.1:5000/`.
 
 ### Kroz Docker
 
+Pozicionirati se u mapu projekta gdje se nalazi Dockerfile:
+
+```bash
+cd ReticGen
+```
+
 ```bash
 docker build -t reticgen .
 docker run -p 5000:5000 reticgen
