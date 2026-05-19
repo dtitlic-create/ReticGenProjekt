@@ -2,6 +2,10 @@
 
 Ovaj projekt je backend sustav izgrađen pomoću **Python Flask** okvira za izračunavanje i pohranu genetike mrežastih pitona. Sustav omogućuje korisnicima da izračunaju vjerojatnost genotipa potomstva, trajno spreme te podatke u bazu podataka (SQLite) te upravljaju njima putem punog **CRUD** sustava.
 
+## Use Case dijagram
+
+![ReticGen Use Case](static/use_case.png)
+
 ## Korišteno
 
 *   **Backend:** Python 3 + Flask
