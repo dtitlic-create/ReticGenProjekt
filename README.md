@@ -4,7 +4,7 @@ Ovaj projekt je backend sustav izgrađen pomoću **Python Flask** okvira za izra
 
 ## Use Case dijagram
 
-![ReticGen Use Case](static/use_case.png)
+![ReticGen Use Case](use_case.png)
 
 ## Korišteno
 
