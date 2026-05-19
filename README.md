@@ -22,12 +22,13 @@ ReticGen/
 ├── genetika_zmija.py        # Algoritam za izračun gena
 ├── genska_lista.py          # Popis kodominantnih i super gena
 ├── leglo.py                 # Pony ORM model (Leglo entitet)
-├── kreirano_leglo.sqlite    # SQLite baza
 ├── requirements.txt         # Python ovisnosti
 ├── Dockerfile               # Docker build recept
+├── use_case.png             # Use case dijagram
 ├── templates/
 │   ├── index.html           # Kalkulator (početna stranica)
-│   └── arhiva.html          # Pregled spremljenih legala
+│   ├── arhiva.html          # Pregled spremljenih legala
+│   └── leglo.html           # Prikaz jednog legla (share link)
 └── static/
     └── style.css            # Vlastiti CSS
 ```
