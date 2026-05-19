@@ -65,8 +65,6 @@ Aplikacija će biti dostupna na `http://127.0.0.1:5000/`.
 open -a Docker
 ```
 
-Pričekaj ~30 sekundi dok se Docker potpuno ne učita.
-
 2. Pozicionirati se u mapu projekta gdje se nalazi Dockerfile:
 
 ```bash
@@ -86,6 +84,10 @@ docker run -p 5000:5000 reticgen
 ```
 
 Aplikacija će biti dostupna na `http://localhost:5000/`.
+
+## Korištenje kalkulatora
+
+Za odabir više gena jednog roditelja, drži **⌘ Command** (macOS) ili **Ctrl** (Windows/Linux) i klikaj gene — svaki dodatni klik dodaje gen u odabir.
 
 ## Testiranje API-ja
 
