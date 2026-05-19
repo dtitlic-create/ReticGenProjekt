@@ -38,10 +38,25 @@ def izracunaj():
             "share_link": f"http://127.0.0.1:5000/{novo_leglo.id}",
             "rezultat_parenja": rezultat
         }), 201
-# GET metoda
+# GET metoda (HTML - share link)
 @app.route('/<int:leglo_id>', methods = ['GET'])
 @orm.db_session
 def pretraga(leglo_id):
+    zapis = Leglo.get(id=leglo_id)
+
+    if not zapis:
+        return jsonify({"message" : f"Izracun pod brojem {leglo_id} nepostoji u arhivi"}), 404
+    return render_template('leglo.html', leglo={
+        "id" : zapis.id,
+        "otac" : zapis.roditelj1,
+        "majka" : zapis.roditelj2,
+        "leglo" : zapis.rezultat
+    })
+
+# GET metoda (JSON - za Postman)
+@app.route('/api/<int:leglo_id>', methods = ['GET'])
+@orm.db_session
+def pretraga_json(leglo_id):
     zapis = Leglo.get(id=leglo_id)
 
     if not zapis:
