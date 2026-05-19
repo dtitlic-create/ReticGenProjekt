@@ -59,14 +59,29 @@ Aplikacija će biti dostupna na `http://127.0.0.1:5000/`.
 
 ### Kroz Docker
 
-Pozicionirati se u mapu projekta gdje se nalazi Dockerfile:
+1. Pokreni Docker daemon (na macOS je potreban Docker Desktop ili ekvivalent):
+
+```bash
+open -a Docker
+```
+
+Pričekaj ~30 sekundi dok se Docker potpuno ne učita.
+
+2. Pozicionirati se u mapu projekta gdje se nalazi Dockerfile:
 
 ```bash
 cd ReticGen
 ```
 
+3. Napravi Docker image:
+
 ```bash
 docker build -t reticgen .
+```
+
+4. Pokreni kontejner (tek nakon što `docker build` završi):
+
+```bash
 docker run -p 5000:5000 reticgen
 ```
 
