@@ -99,3 +99,5 @@ JSON rute (`/`, `/<id>`, `/arhiva`, `/azuriraj/<id>`, `/izbrisi/<id>`) mogu se t
     "zmija2": ["Motley"]
 }
 ```
+## Poveznica na prezentaciju aplikacije
+https://youtu.be/JLjtBGojSog
