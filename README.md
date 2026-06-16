@@ -100,4 +100,4 @@ JSON rute (`/`, `/<id>`, `/arhiva`, `/azuriraj/<id>`, `/izbrisi/<id>`) mogu se t
 }
 ```
 ## Poveznica na prezentaciju aplikacije
-https://youtu.be/JLjtBGojSog
+https://youtu.be/IbVE-hY8mTc
